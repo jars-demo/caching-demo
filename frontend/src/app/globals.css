@@ -1,0 +1,396 @@
+@import 'tailwindcss';
+
+/* Caching, from first principles: a bookshop. A deep green shopfront, cream paper, brass
+   fittings and a serif you would find in a well-made book. Green means a hit, oxblood a miss,
+   and they mean nothing else. Every text pair is checked in tests/unit/tokens.test.ts. */
+:root {
+  --canvas: #f6f1e6;
+  --surface: #fffcf5;
+  --surface-2: #efe8d9;
+  --ink: #1c1a16;
+  --ink-2: #46413a;
+  --muted: #6b6457;
+  --rule: #e4dccb;
+  --rule-strong: #cdc3ad;
+  --green: #1b3a30;
+  --green-2: #24493d;
+  --green-line: #33594b;
+  --on-green: #f6f1e6;
+  --on-green-muted: #b8c6bc;
+  --brass: #8a5a12;
+  --brass-fill: #d9a441;
+  --hit: #2c6a36;
+  --hit-wash: #e5efdf;
+  --miss: #a1301f;
+  --miss-wash: #f8e6df;
+  --card-line: #c8553d;
+  --code-bg: #16211c;
+  --code-ink: #ebe6d8;
+  --code-muted: #a3afa2;
+  --code-rule: #26342d;
+  --shadow-card: 0 1px 0 rgb(28 26 22 / 0.04), 0 10px 28px -12px rgb(28 26 22 / 0.18);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-green: var(--green);
+  --color-green-2: var(--green-2);
+  --color-green-line: var(--green-line);
+  --color-on-green: var(--on-green);
+  --color-on-green-muted: var(--on-green-muted);
+  --color-brass: var(--brass);
+  --color-brass-fill: var(--brass-fill);
+  --color-hit: var(--hit);
+  --color-hit-wash: var(--hit-wash);
+  --color-miss: var(--miss);
+  --color-miss-wash: var(--miss-wash);
+  --color-card-line: var(--card-line);
+  --color-code-bg: var(--code-bg);
+  --color-code-ink: var(--code-ink);
+  --color-code-muted: var(--code-muted);
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--brass-fill);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.on-green :focus-visible {
+  outline-color: var(--brass-fill);
+}
+
+/* A small label above a heading: set in the sans, spaced, in brass. */
+.eyebrow {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.on-green .eyebrow {
+  color: var(--brass-fill);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+
+/* An index card: the red rule under the heading, like the cards in a library catalogue. */
+.index-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: var(--shadow-card);
+}
+
+.index-card .card-head {
+  border-bottom: 1.5px solid var(--card-line);
+}
+
+.code {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font-family: var(--font-mono);
+}
+
+code,
+pre,
+.code {
+  font-variant-ligatures: none;
+}
+
+/* The shelf: a book slides in when it is fetched. */
+.book-in {
+  animation: book-in 320ms var(--ease) both;
+}
+
+@keyframes book-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Fig. 1: each bar grows from the left, in order. */
+.bar-grow {
+  animation: bar-grow 700ms var(--ease) both;
+  animation-delay: var(--at, 0ms);
+  transform-origin: left center;
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.hazel-tail {
+  animation: hazel-tail 5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 10% 90%;
+}
+
+@keyframes hazel-tail {
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+
+.hazel-blink {
+  animation: hazel-blink 7s infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes hazel-blink {
+  0%,
+  95%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-in,
+  .bar-grow,
+  .hazel-tail,
+  .hazel-blink {
+    animation: none;
+  }
+}
+
+/* Chapter prose: set like a book. */
+.prose-shop {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.68;
+  color: var(--ink-2);
+}
+
+.prose-shop h2 {
+  scroll-margin-top: 1.5rem;
+  margin: 3.25rem 0 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.prose-shop h2 .anchor {
+  margin-left: 0.5rem;
+  color: var(--brass);
+  font-family: var(--font-sans);
+  font-size: 0.8em;
+  text-decoration: none;
+  opacity: 0;
+}
+
+.prose-shop h2:hover .anchor,
+.prose-shop h2 .anchor:focus-visible {
+  opacity: 1;
+}
+
+.prose-shop h3 {
+  margin: 2.25rem 0 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.prose-shop p,
+.prose-shop ul,
+.prose-shop ol {
+  margin: 0.85rem 0;
+}
+
+.prose-shop ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose-shop ul > li {
+  position: relative;
+  padding-left: 1.35rem;
+  margin: 0.45rem 0;
+}
+
+.prose-shop ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.72em;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--brass-fill);
+}
+
+.prose-shop ol {
+  padding-left: 1.6rem;
+}
+
+.prose-shop ol > li {
+  margin: 0.45rem 0;
+  padding-left: 0.25rem;
+}
+
+.prose-shop ol > li::marker {
+  font-family: var(--font-sans);
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--brass);
+}
+
+.prose-shop a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--brass-fill);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.prose-shop strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.prose-shop blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  border-left: 3px solid var(--brass-fill);
+  font-style: italic;
+}
+
+.prose-shop :not(pre) > code {
+  padding: 0.06rem 0.32rem;
+  border-radius: 4px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  color: var(--ink);
+}
+
+.prose-shop .code-block {
+  margin: 1.4rem 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.prose-shop .code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.55rem 0.4rem 0.95rem;
+  border-bottom: 1px solid var(--code-rule);
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--code-muted);
+}
+
+.prose-shop .code-block pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 0.9rem 1rem 1rem;
+  color: var(--code-ink);
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.prose-shop .code-block.is-output {
+  background: #1c2a24;
+}
+
+.prose-shop .code-block.is-output pre {
+  color: #d8dccd;
+}
+
+.prose-shop .table-wrap {
+  margin: 1.4rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.prose-shop table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.prose-shop th,
+.prose-shop td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-shop th {
+  background: var(--surface-2);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.prose-shop td code {
+  white-space: nowrap;
+}
+
+.prose-shop tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .prose-shop {
+    font-size: 18px;
+  }
+
+  .prose-shop .code-block pre {
+    font-size: 12px;
+  }
+}
